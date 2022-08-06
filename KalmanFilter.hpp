@@ -5,33 +5,33 @@
 
 /* ************************************ option start ************************************ */
 /* print x init */
-//#define KALMANFILTER_TEST_PRINT_XINIT
+// #define KALMANFILTER_TEST_PRINT_XINIT
 /* print A */
-//#define KALMANFILTER_TEST_PRINT_A
+// #define KALMANFILTER_TEST_PRINT_A
 /* print B */
-//#define KALMANFILTER_TEST_PRINT_B
+// #define KALMANFILTER_TEST_PRINT_B
 /* print P init */
-//#define KALMANFILTER_TEST_PRINT_PINIT
+// #define KALMANFILTER_TEST_PRINT_PINIT
 /* print Q */
-//#define KALMANFILTER_TEST_PRINT_Q
+// #define KALMANFILTER_TEST_PRINT_Q
 /* print H */
-//#define KALMANFILTER_TEST_PRINT_H
+// #define KALMANFILTER_TEST_PRINT_H
 /* print R */
-//#define KALMANFILTER_TEST_PRINT_R
+// #define KALMANFILTER_TEST_PRINT_R
 /* print x_ */
-//#define KALMANFILTER_TEST_PRINT_X_
+// #define KALMANFILTER_TEST_PRINT_X_
 /* print P_ */
-//#define KALMANFILTER_TEST_PRINT_P_
+// #define KALMANFILTER_TEST_PRINT_P_
 /* print y */
-//#define KALMANFILTER_TEST_PRINT_Y
+// #define KALMANFILTER_TEST_PRINT_Y
 /* print S */
-//#define KALMANFILTER_TEST_PRINT_S
+// #define KALMANFILTER_TEST_PRINT_S
 /* print K */
-//#define KALMANFILTER_TEST_PRINT_K
+// #define KALMANFILTER_TEST_PRINT_K
 /* print x */
-//#define KALMANFILTER_TEST_PRINT_X
+// #define KALMANFILTER_TEST_PRINT_X
 /* print P */
-//#define KALMANFILTER_TEST_PRINT_P
+// #define KALMANFILTER_TEST_PRINT_P
 /* ************************************ option end ************************************ */
 
 class KalmanFilter
@@ -58,8 +58,6 @@ class KalmanFilter
         Eigen::MatrixXd Q;
         /* measurement error matrix y */
         Eigen::MatrixXd y;
-        /* measurement result matrix z */
-        Eigen::MatrixXd z;
         /* measurement matrix H */
         Eigen::MatrixXd H;
         /* measurement noise matrix R */
@@ -75,7 +73,7 @@ class KalmanFilter
         KalmanFilter(int dim_state_, int dim_control_, int dim_measure_);
         ~KalmanFilter();
         void KalmanFilterInit();
-        void KalmanFilterRun(Eigen::MatrixXd u);
+        void KalmanFilterRun(Eigen::MatrixXd u, Eigen::MatrixXd z);
 };
 
 #endif

@@ -1,6 +1,18 @@
 #include <iostream>
 #include "KalmanFilter.hpp"
 
+void PrintMatrix(Eigen::MatrixXd mat)
+{
+    for(int i = 0 ; i < mat.rows() ; i++)
+    {
+        for(int j = 0 ; j < mat.cols() ; j++)
+        {
+            std::cout << mat(i, j) << "  ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 /* constructor */
 KalmanFilter::KalmanFilter(int dim_state_, int dim_control_, int dim_measure_):
     dim_state(dim_state_), dim_control(dim_control_), dim_measure(dim_measure_)
@@ -13,13 +25,12 @@ KalmanFilter::KalmanFilter(int dim_state_, int dim_control_, int dim_measure_):
     P_.resize(dim_state, dim_state);
     Q.resize(dim_state, dim_state);
     y.resize(dim_measure, 1);
-    z.resize(dim_measure, 1);
     H.resize(dim_measure, dim_state);
     R.resize(dim_measure, dim_measure);
     K.resize(dim_state, dim_measure);
     I = Eigen::MatrixXd::Identity(dim_state, dim_state);
 
-    std::cout << "KalmanFilter Birth ..." << std::endl;
+    std::cout << "KalmanFilter Birth Done" << std::endl;
 }
 
 /* destructor */
@@ -64,7 +75,7 @@ void KalmanFilter::KalmanFilterInit()
          0.0,   1.0,   0.0,   0.0,
          0.0,   0.0,   100.0, 0.0,
          0.0,   0.0,   0.0,   100.0;
-    #ifdef KALMANFILTER_TEST_PRINT_PINT
+    #ifdef KALMANFILTER_TEST_PRINT_PINIT
         std::cout << "----------------------------------------- P INIT -----------------------------------------" << std::endl;
         PrintMatrix(P);
     #endif
@@ -88,23 +99,26 @@ void KalmanFilter::KalmanFilterInit()
     #endif
 
     /* R init */
-    R << 0.0225, 0.0,
-         0.0,    0.0225;
+    R << 1.0, 0.0,
+         0.0, 1.0;
     #ifdef KALMANFILTER_TEST_PRINT_R
         std::cout << "----------------------------------------- R -----------------------------------------" << std::endl;
         PrintMatrix(R);
     #endif
     /* ************************************ option end ************************************ */    
-    std::cout << "KalmanFilter Init ..." << std::endl;
+    std::cout << "KalmanFilter Init Done" << std::endl;
 }
 
-void KalmanFilter::KalmanFilterRun(Eigen::MatrixXd u)
+void KalmanFilter::KalmanFilterRun(Eigen::MatrixXd u,  Eigen::MatrixXd z)
 {
     /* error checking */
     if(u.rows() != dim_control || u.cols() != 1)
         std::cout << "u is in wrong size !!!" << std::endl;
+    if(z.rows() != dim_measure || u.cols() != 1)
+        std::cout << "z is in wrong size !!!" << std::endl;
     
     u.resize(dim_control, 1);
+    z.resize(dim_measure, 1);
     
     /* temp matrix S */
     Eigen::MatrixXd S;
@@ -151,16 +165,4 @@ void KalmanFilter::KalmanFilterRun(Eigen::MatrixXd u)
         std::cout << "----------------------------------------- P -----------------------------------------" << std::endl;
         PrintMatrix(P);
     #endif
-}
-
-void PrintMatrix(Eigen::MatrixXd mat)
-{
-    for(int i = 0 ; i < mat.rows() ; i++)
-    {
-        for(int j = 0 ; j < mat.cols() ; j++)
-        {
-            std::cout << mat(i, j) << "  ";
-        }
-        std::cout << std::endl;
-    }
 }
