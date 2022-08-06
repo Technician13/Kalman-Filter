@@ -7,6 +7,7 @@ contains necessary parameters and printing options.
   `sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen`    
 * The random number generation mechanism based on time stamp is used to simulate the noise of 
 sensors, this rough approach has produced good results.
+* Provide simple parameter type checking function.
 * The test result is as the follow figure, the red line is the filtered result and the blue line is 
 the origin measurement result, the number of iterations is 20:     
 
